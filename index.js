@@ -2,10 +2,18 @@ const express = require("express");
 const app = express()
 require('dotenv').config()
 require("./config/database")
+
+const fileUpload = require("express-fileupload")
+
+
+app.use(fileUpload());
+
+
 app.use(express.json())
 
-const auth_route = require("./route/auth")
+const auth_route = require("./route/auth");
 const about_route = require("./route/about");
+const testimonial_route = require("./route/testimonial");
 
 
 
@@ -15,6 +23,7 @@ const about_route = require("./route/about");
 
 app.use("/api", auth_route)
 app.use("/api", about_route)
+app.use("/api", testimonial_route)
 
 
 app.use((req, res) => {

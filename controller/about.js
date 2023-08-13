@@ -1,47 +1,15 @@
+const objToString = require("../middleware/objToString");
 const About = require("../model/About");
+
+
+
 
 const postAbout = async (req, res, next) => {
     try {
-        let programming = req.body.programming;
-        let language = req.body.language;
-        let education = req.body.education;
-        let experience = req.body.experience;
-        let training = req.body.training;
 
-        // let finalProgramming = []
-        // // let temp = []
-        // programming.forEach(element => {
-        //     finalProgramming.push(JSON.stringify(element))
-        // });
+        let converted = objToString(req)
 
-        function ObjTOString(arr) {
-            let temp = [];
-            arr.forEach((element) => {
-                temp.push(JSON.stringify(element));
-            });
-            return temp;
-        }
-
-        let toBeConverted = [
-            programming,
-            language,
-            education,
-            experience,
-            training,
-        ];
-
-        let converted = toBeConverted.map((el) => {
-            return ObjTOString(el);
-        });
-        // console.log("converted", converted);
-
-        // finalInterest.forEach(fElement => {
-        //     temp.push(JSON.parse(fElement))
-        // })
-
-        // console.log(programming);
-        // console.log(finalProgramming);
-        // console.log(temp);
+        // console.log(converted);
 
         let aboutCreated = await About.create({
             ...req.body,
@@ -49,7 +17,7 @@ const postAbout = async (req, res, next) => {
             language: [...converted[1]],
             education: [...converted[2]],
             experience: [...converted[3]],
-            training: [...converted[4]],
+            training: [...converted[4]]
         });
 
         return res.send(aboutCreated);
@@ -58,32 +26,53 @@ const postAbout = async (req, res, next) => {
     }
 };
 
-const updateAbout = async(req, res, next) =>{
+const updateAbout = async (req, res, next) => {
 
 
-    try{
+    try {
         // console.log(req.params.id);
-    
+
         let toBeUpdated = await About.findById(req.params.id)
 
-        if(toBeUpdated){
-           return res.send("updated")
+        if (toBeUpdated) {
+
+            let converted = objToString(req)
+
+            let updated = await About.findByIdAndUpdate(req.params.id, {...req.body,   programming: [...converted[0]],
+                language: [...converted[1]],
+                education: [...converted[2]],
+                experience: [...converted[3]],
+                training: [...converted[4]] }, {new:true})
+
+            return res.send(updated)
         }
 
-        return res.status(404).send({msg:"Resource not found"})
+        return res.status(404).send({ msg: "Resource not found" })
 
 
         // console.log(toBeUpdated);
-    
-        
-    }catch(err){
+
+
+    } catch (err) {
         next(err)
     }
 
 
 }
 
+
+const getAbout = async(req, res, next) =>{
+try{
+let about = await About.find()
+res.send(about)
+}catch(err){
+next(err)
+}
+}
+
+
 module.exports = {
     postAbout,
-    updateAbout
+    updateAbout,
+    getAbout
 };
