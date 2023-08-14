@@ -25,7 +25,6 @@ const getSingleContact = async (req, res, next) => {
         if (contact) {
             return res.send(contact)
         }
-
         return res.status(404).send({ msg: "Resource not found" })
     } catch (err) {
         next(err)
@@ -36,7 +35,6 @@ const getSingleContact = async (req, res, next) => {
 const removeContact = async (req, res, next) => {
     try {
         let toBeDeleted = await Contact.findById(req.params.id)
-
         if (toBeDeleted) {
           let deleted = await Contact.findByIdAndDelete(req.params.id)
           return res.status(204).end()

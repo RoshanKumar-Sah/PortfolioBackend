@@ -4,8 +4,9 @@ require('dotenv').config()
 require("./config/database")
 
 const fileUpload = require("express-fileupload")
+const cors = require('cors')
 
-
+app.use(cors())
 app.use(fileUpload());
 
 
