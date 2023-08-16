@@ -17,7 +17,7 @@ const about_route = require("./route/about");
 const testimonial_route = require("./route/testimonial");
 const portfolio_route = require("./route/portfolio")
 const contact_route = require("./route/contact")
-
+const user_route = require("./route/user")
 // console.log(process.env.PASSWORD) 
 
 
@@ -27,6 +27,7 @@ app.use("/api", about_route)
 app.use("/api", testimonial_route)
 app.use("/api", portfolio_route)
 app.use("/api", contact_route)
+app.use("/api", user_route)
 
 app.use((req, res) => {
     res.status(404).send({ msg: "Resource not found" })

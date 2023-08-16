@@ -13,7 +13,11 @@ const login = (req, res) => {
   ) {
     let token = jwt.sign({ username: defaultUserName}, process.env.JWT_KEY, { expiresIn: '1h' });
     // console.log(token);
-    return res.send({"token": token});
+    let temp = {
+      username: process.env.USER_NAME,
+      token: token
+    }
+    return res.send({...temp});
   }
 
   return res.status(401).send({ msg: "Invalid Credentials" });
