@@ -3,7 +3,7 @@ const Portfolio = require("../model/Portfolio");
 
 const postPortfolio = async (req, res, next) => {
     try {
-        let imageURL = " ";
+        let imageURL = null;
         if (req?.files?.image) {
             let localPath = "public/portfolio/";
             let destinationPath = "Portfolio/PortfolioHero";
@@ -21,7 +21,7 @@ const updatePortfolio = async (req, res, next) => {
         // console.log(req.params.id);
         const toBeUpdated = await Portfolio.findById(req.params.id);
 
-        let imageURL = " ";
+        let imageURL = null;
 
         if (toBeUpdated) {
             // console.log(toBeUpdated);
